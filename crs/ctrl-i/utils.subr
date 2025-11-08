@@ -1,0 +1,17 @@
+# utils.subr
+# Handy shell utilites
+# By J. Stuart McMurray
+# Created 20251031
+# Last Modified 20251031
+
+# TABDOC: _catz Print the contents of NUL-newline without fork/exec
+_catz() {
+        while read -d ''; do
+                echo -E "$REPLY"
+        done <"${1-/dev/null}"
+}
+
+# TABDOC: _cat Print the contents of a (text) file without fork/exec
+_cat() { echo -E "$(<${1-/dev/null})"; }
+
+# vim: ft=sh

