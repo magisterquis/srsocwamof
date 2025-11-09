@@ -8,7 +8,7 @@ The code is somewhat usable as-is, but may be useful for reference.
 
 Helpful things:
 - The [`src/`](./src) directory - Source code for most of the things in the talk
-- [Curlrevshell](https://github.com/magisterquis/curlrevshell) - The hidey thing
+- [Curlrevshell](https://github.com/magisterquis/curlrevshell) - Shell over curl
 - [Demobotnetcontroller](https://github.com/magisterquis/demobotnetcontroller) - Demo-grade botnet controller
 - [ProcrastinationEDR](https://github.com/magisterquis/procrastinationedr) - Quite possibly the world's worst ED(not really)R
 
