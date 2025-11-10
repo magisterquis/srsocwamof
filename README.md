@@ -1,6 +1,6 @@
 Sneaky Remap - Simplifying Share Object Cloaking with a Minimum of Fuss
 =======================================================================
-Material for a [talk]([https://docs.google.com/presentation/d/1iCSP5n4FRUGPr5XWjrxiX9cQ4dmsfdKrQI65q0TNUB8](https://docs.google.com/presentation/d/1iCSP5n4FRUGPr5XWjrxiX9cQ4dmsfdKrQI65q0TNUB8/edit?slide=id.g3a0a942aa71_1_490#slide=id.g3a0a942aa71_1_490)).
+Material for a [talk](https://docs.google.com/presentation/d/1iCSP5n4FRUGPr5XWjrxiX9cQ4dmsfdKrQI65q0TNUB8/edit?slide=id.g3a0a942aa71_1_490#slide=id.g3a0a942aa71_1_490)
 
 Presented at BSides Berlin 2025.
 
